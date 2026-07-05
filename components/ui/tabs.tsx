@@ -81,7 +81,7 @@ export function TabsTrigger({
       id={`${ctx.idBase}-trigger-${value}`}
       onClick={() => ctx.onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-sm px-4 py-1.5 text-sm font-medium transition-all duration-200",
+        "inline-flex items-center justify-center gap-2 rounded-sm px-4 py-1.5 text-sm font-medium cursor-pointer transition-all duration-200",
         isActive
           ? "bg-surface-elevated text-text-primary shadow-sm"
           : "text-text-secondary hover:text-text-primary",

@@ -25,13 +25,6 @@ import {
 } from "@/lib/release";
 import { cn } from "@/lib/utils";
 
-const PLATFORM_LABEL: Record<Platform, string> = {
-  mac: "macOS",
-  windows: "Windows",
-  linux: "Linux",
-  unknown: "your platform",
-};
-
 const DEFAULT_TAB: Record<Platform, string> = {
   mac: "mac",
   windows: "windows",
@@ -51,10 +44,6 @@ export function Download() {
       setTab(DEFAULT_TAB[platform]);
     }
   }, [platform]);
-
-  const recommendedLabel = platform
-    ? `Recommended for ${PLATFORM_LABEL[platform]}`
-    : "Pick your platform";
 
   return (
     <section id="download" className="py-24 sm:py-32 bg-surface-muted">
@@ -91,11 +80,6 @@ export function Download() {
         </div>
 
         <Reveal delay={0.1} className="mt-10">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="inline-flex size-2 rounded-full bg-success animate-pulse" />
-            <span className="text-text-secondary">{recommendedLabel}</span>
-          </div>
-
           <Tabs value={tab} onValueChange={setTab} idBase="download">
             <TabsList className="mt-3 flex-wrap">
               <TabsTrigger value="linux-deb">
@@ -125,12 +109,15 @@ export function Download() {
               <DownloadPanel
                 title="Ubuntu, Debian, Pop!_OS, Mint"
                 subtitle="One-line install: curl, apt, launch."
-                primaryCta={{
-                  href: DOWNLOADS.linux.deb,
-                  label: "Download .deb",
-                  size: SIZES.deb,
-                  icon: <LuDownload className="size-5" />,
-                }}
+                primaryCtas={[
+                  {
+                    href: DOWNLOADS.linux.deb,
+                    label: "Download .deb",
+                    size: SIZES.deb,
+                    sha: CHECKSUMS.deb,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                ]}
                 steps={[
                   {
                     title: "Download the .deb",
@@ -155,7 +142,7 @@ export function Download() {
                   href: DOWNLOADS.linux.rpm,
                   label: "Need .rpm?",
                 }}
-                sha={CHECKSUMS.deb}
+                verifyFilename="claude-config.deb"
               />
             </TabsContent>
 
@@ -164,12 +151,15 @@ export function Download() {
               <DownloadPanel
                 title="Fedora, RHEL, openSUSE"
                 subtitle="Use dnf or rpm to install."
-                primaryCta={{
-                  href: DOWNLOADS.linux.rpm,
-                  label: "Download .rpm",
-                  size: SIZES.rpm,
-                  icon: <LuDownload className="size-5" />,
-                }}
+                primaryCtas={[
+                  {
+                    href: DOWNLOADS.linux.rpm,
+                    label: "Download .rpm",
+                    size: SIZES.rpm,
+                    sha: CHECKSUMS.rpm,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                ]}
                 steps={[
                   {
                     title: "Download the .rpm",
@@ -193,7 +183,7 @@ export function Download() {
                   href: DOWNLOADS.linux.deb,
                   label: "Prefer .deb?",
                 }}
-                sha={CHECKSUMS.rpm}
+                verifyFilename="claude-config.rpm"
               />
             </TabsContent>
 
@@ -202,12 +192,15 @@ export function Download() {
               <DownloadPanel
                 title="Arch, Manjaro, or any distro"
                 subtitle="The .AppImage runs anywhere — no install step."
-                primaryCta={{
-                  href: DOWNLOADS.linux.appimage,
-                  label: "Download .AppImage",
-                  size: SIZES.appimage,
-                  icon: <LuDownload className="size-5" />,
-                }}
+                primaryCtas={[
+                  {
+                    href: DOWNLOADS.linux.appimage,
+                    label: "Download .AppImage",
+                    size: SIZES.appimage,
+                    sha: CHECKSUMS.appimage,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                ]}
                 steps={[
                   {
                     title: "Download and make executable",
@@ -223,7 +216,7 @@ export function Download() {
                   },
                 ]}
                 note="Arch Linux: Tauri has no native pacman target, so the AppImage is the supported path until an AUR PKGBUILD ships."
-                sha={CHECKSUMS.appimage}
+                verifyFilename="claude-config.AppImage"
               />
             </TabsContent>
 
@@ -232,12 +225,15 @@ export function Download() {
               <DownloadPanel
                 title={isAppleSilicon ? "Apple Silicon (M-series)" : "macOS"}
                 subtitle="Universal binary — works on Intel and Apple Silicon."
-                primaryCta={{
-                  href: DOWNLOADS.mac.dmg,
-                  label: "Download .dmg",
-                  size: SIZES.dmg,
-                  icon: <LuDownload className="size-5" />,
-                }}
+                primaryCtas={[
+                  {
+                    href: DOWNLOADS.mac.dmg,
+                    label: "Download .dmg",
+                    size: SIZES.dmg,
+                    sha: CHECKSUMS.dmg,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                ]}
                 steps={[
                   {
                     title: "Download",
@@ -257,7 +253,7 @@ export function Download() {
                   href: DOWNLOADS.mac.appTar,
                   label: "Need a .app.tar.gz?",
                 }}
-                sha={CHECKSUMS.dmg}
+                verifyFilename="ClaudeConfig.dmg"
               />
             </TabsContent>
 
@@ -266,12 +262,22 @@ export function Download() {
               <DownloadPanel
                 title="Windows 10 / 11"
                 subtitle="Pick the installer you prefer."
-                primaryCta={{
-                  href: DOWNLOADS.windows.msi,
-                  label: "Download .msi",
-                  size: SIZES.msi,
-                  icon: <LuDownload className="size-5" />,
-                }}
+                primaryCtas={[
+                  {
+                    href: DOWNLOADS.windows.msi,
+                    label: "Download .msi",
+                    size: SIZES.msi,
+                    sha: CHECKSUMS.msi,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                  {
+                    href: DOWNLOADS.windows.exe,
+                    label: "Download .exe",
+                    size: SIZES.exe,
+                    sha: CHECKSUMS.exe,
+                    icon: <LuDownload className="size-5" />,
+                  },
+                ]}
                 steps={[
                   {
                     title: "Download",
@@ -286,12 +292,8 @@ export function Download() {
                     lang: "powershell",
                   },
                 ]}
-                altLink={{
-                  href: DOWNLOADS.windows.exe,
-                  label: "Prefer .exe (NSIS)?",
-                }}
                 note="SmartScreen will show a warning until the binary is signed with an Authenticode certificate. Click More info → Run anyway."
-                sha={CHECKSUMS.msi}
+                verifyFilename="claude-config.msi"
               />
             </TabsContent>
           </Tabs>
@@ -325,30 +327,36 @@ interface Step {
   lang?: string;
 }
 
+interface PrimaryCta {
+  href: string;
+  label: string;
+  size: string;
+  sha: string;
+  icon: React.ReactNode;
+}
+
 interface DownloadPanelProps {
   title: string;
   subtitle: string;
-  primaryCta: {
-    href: string;
-    label: string;
-    size: string;
-    icon: React.ReactNode;
-  };
+  primaryCtas: PrimaryCta[];
   steps: Step[];
   note?: string;
   altLink?: { href: string; label: string };
-  sha?: string;
+  /** First CTA's SHA, used as a default for the verify-snippet. Pass explicitly only if you want to override. */
+  verifyFilename?: string;
 }
 
 function DownloadPanel({
   title,
   subtitle,
-  primaryCta,
+  primaryCtas,
   steps,
   note,
   altLink,
-  sha,
+  verifyFilename,
 }: DownloadPanelProps) {
+  const primarySha = primaryCtas[0]?.sha;
+
   return (
     <div className="grid gap-6 lg:grid-cols-12">
       <div className="lg:col-span-5">
@@ -356,32 +364,41 @@ function DownloadPanel({
           <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
           <p className="mt-2 text-sm text-text-secondary">{subtitle}</p>
 
-          <a
-            href={primaryCta.href}
-            className="mt-6 inline-flex"
-            download
-          >
-            <Button size="lg" className="w-full sm:w-auto">
-              {primaryCta.icon}
-              {primaryCta.label}
-            </Button>
-          </a>
+          <div className="mt-6 flex flex-wrap gap-3">
+            {primaryCtas.map((cta) => (
+              <a key={cta.label} href={cta.href} className="inline-flex" download>
+                <Button
+                  size="lg"
+                  variant="primary"
+                  className="w-full sm:w-auto"
+                >
+                  {cta.icon}
+                  {cta.label}
+                </Button>
+              </a>
+            ))}
+          </div>
 
-          <dl className="mt-5 grid grid-cols-2 gap-4 text-xs">
-            <div>
-              <dt className="text-text-muted uppercase tracking-wider">Size</dt>
-              <dd className="mt-1 font-mono text-text-primary">{primaryCta.size}</dd>
-            </div>
-            <div>
-              <dt className="text-text-muted uppercase tracking-wider">SHA-256</dt>
-              <dd
-                className="mt-1 font-mono text-text-secondary truncate"
-                title={sha}
-              >
-                {sha?.slice(0, 12)}…
-              </dd>
-            </div>
-          </dl>
+          {primaryCtas.map((cta) => (
+            <dl
+              key={cta.label}
+              className="mt-4 grid grid-cols-2 gap-4 text-xs first:mt-5"
+            >
+              <div>
+                <dt className="text-text-muted uppercase tracking-wider">Size</dt>
+                <dd className="mt-1 font-mono text-text-primary">{cta.size}</dd>
+              </div>
+              <div>
+                <dt className="text-text-muted uppercase tracking-wider">SHA-256</dt>
+                <dd
+                  className="mt-1 font-mono text-text-secondary truncate"
+                  title={cta.sha}
+                >
+                  {cta.sha.slice(0, 12)}…
+                </dd>
+              </div>
+            </dl>
+          ))}
 
           {altLink && (
             <div className="mt-5 pt-5 border-t border-surface-border">
@@ -437,7 +454,7 @@ function DownloadPanel({
           ))}
         </ol>
 
-        {sha && (
+        {primarySha && (
           <details className="mt-4 group">
             <summary className="cursor-pointer list-none text-xs text-text-muted hover:text-text-primary transition-colors inline-flex items-center gap-1.5">
               <LuCheck className="size-3.5" />
@@ -445,7 +462,7 @@ function DownloadPanel({
             </summary>
             <div className="mt-2">
               <CodeBlock
-                code={`# Linux\nsha256sum claude-config.deb\n# expected: ${sha}`}
+                code={`# Linux / macOS\nsha256sum ${verifyFilename ?? "claude-config.deb"}\n# expected: ${primarySha}`}
                 language="bash"
                 filename="sha256"
               />
