@@ -83,7 +83,7 @@ export function SheetHeader({
         <button
           onClick={onClose}
           aria-label="Close menu"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors"
+          className="inline-flex items-center justify-center w-9 h-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors cursor-pointer"
         >
           <LuX className="size-5" />
         </button>

@@ -31,7 +31,7 @@ export function Footer() {
                 href={APP.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 h-9 px-4 rounded-sm bg-text-primary text-white text-sm font-medium hover:opacity-90 transition-opacity"
+                className="inline-flex items-center gap-2 h-9 px-4 rounded-sm bg-text-primary text-white text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer"
               >
                 <LuGithub className="size-4" />
                 View source
@@ -40,7 +40,7 @@ export function Footer() {
                 href={`${APP.repoUrl}/releases`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 h-9 px-4 rounded-sm bg-surface-elevated text-text-primary border border-surface-border text-sm font-medium hover:bg-surface-base transition-colors"
+                className="inline-flex items-center gap-2 h-9 px-4 rounded-sm bg-surface-elevated text-text-primary border border-surface-border text-sm font-medium hover:bg-surface-base transition-colors cursor-pointer"
               >
                 <LuStar className="size-4" />
                 Star

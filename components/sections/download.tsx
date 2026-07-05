@@ -396,7 +396,7 @@ function DownloadPanel({
               )}
             >
               <div className="flex items-start gap-4">
-                <span className="inline-flex shrink-0 size-7 items-center justify-center rounded-sm bg-brand/10 text-brand text-xs font-semibold">
+                <span className="inline-flex shrink-0 size-7 items-center justify-center rounded-sm bg-brand/10 text-brand text-xs font-semibold cursor-default">
                   {i + 1}
                 </span>
                 <div className="min-w-0 flex-1">

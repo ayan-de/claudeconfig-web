@@ -91,7 +91,7 @@ export function Install() {
                     {/* Step header */}
                     <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4 border-b border-surface-border bg-surface-muted/40">
                       <div className="flex items-center gap-3">
-                        <span className="inline-flex items-center justify-center size-9 rounded-sm bg-surface-elevated border border-surface-border font-mono text-xs font-semibold text-brand">
+                        <span className="inline-flex items-center justify-center size-9 rounded-sm bg-surface-elevated border border-surface-border font-mono text-xs font-semibold text-brand cursor-default">
                           {step.n}
                         </span>
                         <h3 className="text-sm sm:text-base font-semibold tracking-tight">

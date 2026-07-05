@@ -111,7 +111,7 @@ export function Features() {
               delay={Math.min(i * 0.04, 0.3)}
               className={cn(feature.large && "sm:col-span-2 lg:col-span-2 lg:row-span-1")}
             >
-              <Card className="h-full cursor-pointer transition-all duration-300 hover:border-neutral-warm hover:shadow-md hover:-translate-y-0.5 rounded-sm">
+              <Card className="h-full transition-all duration-300 hover:border-neutral-warm hover:shadow-md hover:-translate-y-0.5 rounded-sm cursor-pointer">
                 <CardHeader>
                   <div className="flex items-start justify-between gap-4">
                     <div

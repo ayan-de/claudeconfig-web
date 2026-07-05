@@ -108,7 +108,7 @@ export function Architecture() {
             <Reveal key={item.name} delay={i * 0.05}>
               <div className="h-full rounded-sm border border-surface-border bg-surface-elevated p-5 transition-all hover:border-neutral-warm hover:-translate-y-0.5 cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center justify-center size-9 rounded-sm bg-brand/10 text-brand">
+                  <div className="inline-flex items-center justify-center size-9 rounded-sm bg-brand/10 text-brand cursor-default">
                     {item.icon}
                   </div>
                   <div>
@@ -217,7 +217,7 @@ export function Architecture() {
                 key={i}
                 className="flex gap-3 rounded-xl border border-surface-border bg-surface-elevated p-4 text-sm text-text-secondary"
               >
-                <span className="inline-flex shrink-0 size-6 items-center justify-center rounded-sm bg-brand/10 text-brand text-xs font-semibold">
+                <span className="inline-flex shrink-0 size-6 items-center justify-center rounded-sm bg-brand/10 text-brand text-xs font-semibold cursor-default">
                   {i + 1}
                 </span>
                 <span>{line}</span>

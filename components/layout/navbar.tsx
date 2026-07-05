@@ -67,7 +67,7 @@ export function Navbar() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "inline-flex h-9 items-center px-3 rounded-sm text-sm font-medium transition-colors",
+                        "inline-flex h-9 items-center px-3 rounded-sm text-sm font-medium transition-colors cursor-pointer",
                         isActive
                           ? "text-text-primary bg-surface-muted"
                           : "text-text-secondary hover:text-text-primary hover:bg-surface-muted"
@@ -87,7 +87,7 @@ export function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${APP.name} on GitHub`}
-              className="hidden sm:inline-flex items-center justify-center size-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors"
+              className="hidden sm:inline-flex items-center justify-center size-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors cursor-pointer"
             >
               <LuGithub className="size-5" />
             </a>
@@ -101,7 +101,7 @@ export function Navbar() {
               <button
                 onClick={() => setMobileOpen(true)}
                 aria-label="Open menu"
-                className="inline-flex items-center justify-center size-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors"
+                className="inline-flex items-center justify-center size-9 rounded-sm text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors cursor-pointer"
               >
                 <LuMenu className="size-5" />
               </button>
@@ -125,7 +125,7 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center h-11 px-3 rounded-sm text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors"
+                  className="flex items-center h-11 px-3 rounded-sm text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-muted transition-colors cursor-pointer"
                 >
                   {link.label}
                 </Link>
@@ -142,7 +142,7 @@ export function Navbar() {
                 href={APP.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-sm text-sm font-medium bg-surface-elevated text-text-primary border border-surface-border hover:bg-surface-muted"
+                className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-sm text-sm font-medium bg-surface-elevated text-text-primary border border-surface-border hover:bg-surface-muted cursor-pointer"
               >
                 <LuGithub className="size-4" />
                 Star on GitHub
