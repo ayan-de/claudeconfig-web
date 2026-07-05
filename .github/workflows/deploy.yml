@@ -1,0 +1,86 @@
+name: Deploy marketing site
+
+on:
+  # Rebuild + deploy whenever a Claude Config release tag is pushed
+  push:
+    tags:
+      - "v*.*.*"
+    branches:
+      - master
+  # Allow ad-hoc rebuilds from the Actions UI (e.g. after fixing a typo)
+  workflow_dispatch:
+  # Nightly rebuild — picks up the latest release if the user forgot to push
+  # a tag in lockstep. Cheap to run.
+  schedule:
+    - cron: "17 */6 * * *" # every 6 hours, off the :00 mark
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Sync release + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync latest release from GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm sync:release
+
+      - name: Show synced release info
+        run: |
+          echo "version=$(grep ^NEXT_PUBLIC_APP_VERSION= .env.local | cut -d= -f2)"
+          echo "tag=$(grep ^NEXT_PUBLIC_RELEASE_TAG= .env.local | cut -d= -f2)"
+
+      - name: Build
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Upload static output
+        uses: actions/upload-artifact@v4
+        with:
+          name: out
+          path: out
+          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
