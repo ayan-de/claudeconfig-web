@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   LuDownload,
   LuMonitor,
@@ -40,6 +41,7 @@ const DEFAULT_TAB: Record<Platform, string> = {
 
 export function Download() {
   const { platform, isAppleSilicon } = useOSTracker();
+  const reduce = useReducedMotion();
   const initialTab = platform ? DEFAULT_TAB[platform] : "linux-deb";
   const [tab, setTab] = React.useState(initialTab);
 
@@ -57,21 +59,36 @@ export function Download() {
   return (
     <section id="download" className="py-24 sm:py-32 bg-surface-muted">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
-            Download
-          </span>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance">
-            Native installers for every desktop.
-          </h2>
-          <p className="mt-4 text-text-secondary text-pretty">
-            Small (~5 MB), self-contained, signed builds for{" "}
-            <span className="text-text-primary font-medium">Linux</span>,{" "}
-            <span className="text-text-primary font-medium">macOS</span>, and{" "}
-            <span className="text-text-primary font-medium">Windows</span>.
-            One-click to install.
-          </p>
-        </Reveal>
+        <div className="grid gap-10 lg:grid-cols-12 items-center">
+          <Reveal className="lg:col-span-7 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+              Download
+            </span>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-balance">
+              Native installers for every desktop.
+            </h2>
+            <p className="mt-4 text-text-secondary text-pretty">
+              Small (~5 MB), self-contained, signed builds for{" "}
+              <span className="text-text-primary font-medium">Linux</span>,{" "}
+              <span className="text-text-primary font-medium">macOS</span>, and{" "}
+              <span className="text-text-primary font-medium">Windows</span>.
+              One-click to install.
+            </p>
+          </Reveal>
+
+          <motion.video
+            initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+            src="/animate.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden
+            className="lg:col-span-4 w-full max-w-[200px] lg:ml-auto aspect-square rounded-2xl border border-surface-border bg-surface-elevated shadow-xl"
+          />
+        </div>
 
         <Reveal delay={0.1} className="mt-10">
           <div className="flex items-center gap-2 text-sm">
