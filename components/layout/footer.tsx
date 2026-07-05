@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { LuGithub, LuStar, LuArrowUpRight } from "react-icons/lu";
-import { APP, NAV_LINKS } from "@/lib/constants";
+import { APP, NAV_LINKS } from "@/lib/release";
 
 export function Footer() {
   return (

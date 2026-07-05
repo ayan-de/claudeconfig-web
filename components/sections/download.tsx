@@ -21,7 +21,7 @@ import {
   DOWNLOADS,
   SIZES,
   type Platform,
-} from "@/lib/constants";
+} from "@/lib/release";
 import { cn } from "@/lib/utils";
 
 const PLATFORM_LABEL: Record<Platform, string> = {

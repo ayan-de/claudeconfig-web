@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LuMenu, LuGithub, LuDownload } from "react-icons/lu";
-import { APP, NAV_LINKS } from "@/lib/constants";
+import { APP, NAV_LINKS } from "@/lib/release";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";

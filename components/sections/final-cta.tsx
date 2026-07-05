@@ -4,7 +4,7 @@ import { LuDownload, LuGithub, LuStar } from "react-icons/lu";
 import Image from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
-import { APP } from "@/lib/constants";
+import { APP } from "@/lib/release";
 
 export function FinalCTA() {
   return (

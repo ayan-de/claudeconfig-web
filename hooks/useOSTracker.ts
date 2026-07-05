@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import type { Platform } from "@/lib/constants";
+import type { Platform } from "@/lib/release";
 
 /**
  * Detects the user's OS from `navigator.userAgent` using useSyncExternalStore.

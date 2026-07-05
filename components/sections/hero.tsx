@@ -12,7 +12,7 @@ import {
 } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { APP } from "@/lib/constants";
+import { APP } from "@/lib/release";
 import { cn } from "@/lib/utils";
 
 export function Hero() {

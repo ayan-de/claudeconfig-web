@@ -10,7 +10,7 @@ import { CodeBlock } from "@/components/ui/code-block";
 import { Reveal } from "@/components/ui/reveal";
 import { Badge } from "@/components/ui/badge";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { DOWNLOADS } from "@/lib/constants";
+import { DOWNLOADS } from "@/lib/release";
 
 const STEPS = [
   {
