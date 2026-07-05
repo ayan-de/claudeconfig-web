@@ -95,6 +95,7 @@ export function Hero() {
 
           {/* App preview column */}
           <div className="lg:col-span-5 space-y-5">
+            <HeroVisual />
             <motion.video
               initial={reduce ? false : { opacity: 0, y: 14, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -107,7 +108,6 @@ export function Hero() {
               aria-hidden
               className="w-full aspect-square rounded-2xl border border-surface-border bg-surface-elevated shadow-xl"
             />
-            <HeroVisual />
           </div>
         </div>
       </div>
