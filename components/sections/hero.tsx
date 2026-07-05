@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   LuDownload,
@@ -12,6 +11,7 @@ import {
 } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { APP } from "@/lib/release";
 import { cn } from "@/lib/utils";
 
@@ -94,7 +94,19 @@ export function Hero() {
           </div>
 
           {/* App preview column */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 space-y-5">
+            <motion.video
+              initial={reduce ? false : { opacity: 0, y: 14, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.05, ease: [0.21, 0.47, 0.32, 0.98] }}
+              src="/animate.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-hidden
+              className="w-full aspect-square rounded-2xl border border-surface-border bg-surface-elevated shadow-xl"
+            />
             <HeroVisual />
           </div>
         </div>
@@ -226,7 +238,7 @@ function HeroVisual() {
         transition={{ duration: 0.6, delay: 0.5 }}
         className="absolute -left-6 sm:-left-12 bottom-10 hidden sm:flex items-center gap-2 rounded-xl border border-surface-border bg-surface-elevated px-3 py-2 shadow-lg"
       >
-        <Image src="/logo.png" alt="" width={20} height={20} />
+        <AnimatedLogo size={20} />
         <span className="text-[11px] font-mono text-text-secondary">
           env <span className="text-brand">✓</span> updated
         </span>

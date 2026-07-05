@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { LuMenu, LuGithub, LuDownload } from "react-icons/lu";
 import { APP, NAV_LINKS } from "@/lib/release";
@@ -10,6 +9,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 
 export function Navbar() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -42,15 +42,8 @@ export function Navbar() {
             className="flex items-center gap-2.5 group"
             aria-label={`${APP.name} home`}
           >
-            <span className="relative inline-flex size-8 items-center justify-center rounded-sm bg-surface-muted border border-surface-border overflow-hidden transition-transform group-hover:scale-105">
-              <Image
-                src="/logo.png"
-                alt=""
-                width={28}
-                height={28}
-                className="object-contain"
-                priority
-              />
+            <span className="transition-transform group-hover:scale-105">
+              <AnimatedLogo size={32} />
             </span>
             <span className="text-base font-semibold tracking-tight">
               {APP.name}
@@ -114,7 +107,7 @@ export function Navbar() {
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen} side="right">
         <SheetHeader onClose={() => setMobileOpen(false)}>
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="" width={24} height={24} />
+            <AnimatedLogo size={24} />
             <span className="text-sm font-semibold">{APP.name}</span>
           </div>
         </SheetHeader>

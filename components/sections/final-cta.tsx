@@ -1,9 +1,9 @@
 "use client";
 
 import { LuDownload, LuGithub, LuStar } from "react-icons/lu";
-import Image from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { Button } from "@/components/ui/button";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 import { APP } from "@/lib/release";
 
 export function FinalCTA() {
@@ -19,14 +19,8 @@ export function FinalCTA() {
             <div className="absolute -bottom-24 -left-24 -z-10 size-80 bg-brand-soft/30 blur-3xl rounded-full" />
 
             <div className="px-6 sm:px-12 py-16 sm:py-20 text-center">
-              <div className="inline-flex items-center justify-center size-16 rounded-sm bg-surface-elevated border border-surface-border shadow-sm mb-6">
-                <Image
-                  src="/logo.png"
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="object-contain"
-                />
+              <div className="inline-flex items-center justify-center size-16 rounded-sm bg-surface-elevated border border-surface-border shadow-sm mb-6 overflow-hidden">
+                <AnimatedLogo size={64} className="!border-0 !bg-transparent" />
               </div>
 
               <h2 className="mx-auto max-w-2xl text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-balance">

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { LuGithub, LuStar, LuArrowUpRight } from "react-icons/lu";
 import { APP, NAV_LINKS } from "@/lib/release";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 
 export function Footer() {
   return (
@@ -10,15 +10,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <Link href="/" className="inline-flex items-center gap-2.5">
-              <span className="inline-flex size-8 items-center justify-center rounded-sm bg-surface-elevated border border-surface-border overflow-hidden">
-                <Image
-                  src="/logo.png"
-                  alt=""
-                  width={28}
-                  height={28}
-                  className="object-contain"
-                />
-              </span>
+              <AnimatedLogo size={32} />
               <span className="text-base font-semibold tracking-tight">
                 {APP.name}
               </span>
