@@ -94,20 +94,8 @@ export function Hero() {
           </div>
 
           {/* App preview column */}
-          <div className="lg:col-span-5 space-y-5">
+          <div className="lg:col-span-5">
             <HeroVisual />
-            <motion.video
-              initial={reduce ? false : { opacity: 0, y: 14, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.05, ease: [0.21, 0.47, 0.32, 0.98] }}
-              src="/animate.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-hidden
-              className="w-full aspect-square rounded-2xl border border-surface-border bg-surface-elevated shadow-xl"
-            />
           </div>
         </div>
       </div>
