@@ -1,92 +1,45 @@
-name: Deploy marketing site
+name: Trigger Vercel rebuild
+
+# The live site (claudeconfig.ayande.xyz) is hosted on Vercel, which only
+# rebuilds on a git push to this repo. But download URLs/sizes/checksums are
+# synced from the claude-config Releases API at BUILD time — so a new app
+# release doesn't refresh the site on its own.
+#
+# This workflow pings a Vercel Deploy Hook to force a rebuild (which re-runs
+# `pnpm sync:release`). The claude-config release workflow pings the same hook
+# on publish; this scheduled run is the self-heal safety net.
+#
+# Setup: create a Deploy Hook in Vercel (Project → Settings → Git → Deploy
+# Hooks) and store its URL as the repo secret VERCEL_DEPLOY_HOOK_URL.
 
 on:
-  # Rebuild + deploy whenever a Claude Config release tag is pushed
-  push:
-    tags:
-      - "v*.*.*"
-    branches:
-      - master
-  # Allow ad-hoc rebuilds from the Actions UI (e.g. after fixing a typo)
   workflow_dispatch:
-  # Nightly rebuild — picks up the latest release if the user forgot to push
-  # a tag in lockstep. Cheap to run.
+  # Self-heal: catch any release that didn't trigger a rebuild directly.
   schedule:
     - cron: "17 */6 * * *" # every 6 hours, off the :00 mark
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: vercel-rebuild
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Sync release + build
+  ping:
+    name: Ping Vercel deploy hook
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
+    timeout-minutes: 2
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Sync latest release from GitHub
+      - name: Trigger rebuild
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm sync:release
-
-      - name: Show synced release info
+          HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
         run: |
-          echo "version=$(grep ^NEXT_PUBLIC_APP_VERSION= .env.local | cut -d= -f2)"
-          echo "tag=$(grep ^NEXT_PUBLIC_RELEASE_TAG= .env.local | cut -d= -f2)"
-
-      - name: Build
-        run: pnpm build
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Upload static output
-        uses: actions/upload-artifact@v4
-        with:
-          name: out
-          path: out
-          retention-days: 7
-
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/configure-pages@v5
-
-      - name: Download built site
-        uses: actions/download-artifact@v4
-        with:
-          name: out
-          path: out
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          if [ -z "$HOOK_URL" ]; then
+            echo "::error::VERCEL_DEPLOY_HOOK_URL secret is not set. Add it in repo Settings → Secrets."
+            exit 1
+          fi
+          echo "Triggering Vercel deploy hook…"
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$HOOK_URL")
+          echo "Vercel responded with HTTP $code"
+          case "$code" in
+            2*) echo "Rebuild triggered." ;;
+            *)  echo "::error::Deploy hook returned HTTP $code"; exit 1 ;;
+          esac

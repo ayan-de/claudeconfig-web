@@ -78,12 +78,19 @@ export const SIZES = {
 } as const;
 
 /**
- * SHA-256 checksums. The GitHub Releases API does not expose these; they
- * live in the release body / .sha256sums file. If you want this automated
- * too, fetch that file in scripts/sync-release.ts and add
- * NEXT_PUBLIC_SHA_* env vars.
+ * SHA-256 checksums. The GitHub Releases API exposes these per asset via the
+ * `digest` field ("sha256:…"); scripts/sync-release.ts reads it and injects
+ * NEXT_PUBLIC_SHA_* env vars. Falls back to constants.ts when unset.
  */
-export const CHECKSUMS = FALLBACK_CHECKSUMS;
+export const CHECKSUMS = {
+  deb: pick("NEXT_PUBLIC_SHA_DEB", FALLBACK_CHECKSUMS.deb),
+  rpm: pick("NEXT_PUBLIC_SHA_RPM", FALLBACK_CHECKSUMS.rpm),
+  appimage: pick("NEXT_PUBLIC_SHA_APPIMAGE", FALLBACK_CHECKSUMS.appimage),
+  dmg: pick("NEXT_PUBLIC_SHA_DMG", FALLBACK_CHECKSUMS.dmg),
+  msi: pick("NEXT_PUBLIC_SHA_MSI", FALLBACK_CHECKSUMS.msi),
+  exe: pick("NEXT_PUBLIC_SHA_EXE", FALLBACK_CHECKSUMS.exe),
+  appTar: pick("NEXT_PUBLIC_SHA_APP_TAR", FALLBACK_CHECKSUMS.appTar),
+} as const;
 
 export const NAV_LINKS = [
   { href: "#features", label: "Features" },
